@@ -1,0 +1,27 @@
+{
+  "处死": {
+    "replacement": "终止",
+    "reason": "翻译错误：技术语境下 'Execute' 不应翻译为'处死'，应使用'终止'或'执行'",
+    "category": "translation"
+  },
+  "执行程序": {
+    "replacement": "运行程序",
+    "reason": "翻译错误：'Execute program' 在技术文档中应翻译为'运行程序'而非'执行程序'（避免歧义）",
+    "category": "translation"
+  },
+  "杀死进程": {
+    "replacement": "终止进程",
+    "reason": "翻译错误：'Kill process' 应翻译为'终止进程'而非'杀死进程'",
+    "category": "translation"
+  },
+  "致命错误": {
+    "replacement": "严重错误",
+    "reason": "翻译优化：'Fatal error' 翻译为'严重错误'比'致命错误'更符合中文习惯",
+    "category": "translation"
+  },
+  "死锁": {
+    "replacement": "资源锁定",
+    "reason": "翻译优化：'Deadlock' 可以翻译为'资源锁定'以避免'死'字",
+    "category": "translation"
+  }
+}

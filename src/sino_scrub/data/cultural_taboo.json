@@ -1,0 +1,32 @@
+{
+  "升天": {
+    "replacement": "幸福",
+    "reason": "文化禁忌：'升天'字面意思是'升入天堂'（死亡的委婉说法），在祝福语中不合适",
+    "category": "cultural"
+  },
+  "绿帽子": {
+    "replacement": "精美帽子",
+    "reason": "文化禁忌：'绿帽子'在中文文化中暗示配偶不忠，在礼物语境中应避免",
+    "category": "cultural"
+  },
+  "送钟": {
+    "replacement": "送礼物",
+    "reason": "文化禁忌：'送钟'谐音'送终'，在中文文化中是不吉利的",
+    "category": "cultural"
+  },
+  "数字4": {
+    "replacement": "数字",
+    "reason": "文化禁忌：数字'4'谐音'死'，在某些场合应避免",
+    "category": "cultural"
+  },
+  "白色礼物": {
+    "replacement": "精美礼物",
+    "reason": "文化禁忌：白色在中文文化中与丧葬相关，送礼时应避免",
+    "category": "cultural"
+  },
+  "梨": {
+    "replacement": "水果",
+    "reason": "文化禁忌：'梨'谐音'离'（分离），在某些场合（如探病、送礼）应避免",
+    "category": "cultural"
+  }
+}

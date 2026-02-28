@@ -1,0 +1,122 @@
+### 1. 🆔 产品身份卡 (Product Identity)
+
+*给项目注入灵魂，让开发者一眼就能记住。*
+
+* **项目代号 (Internal Code):** `Project-Redline` (红线计划)
+* **最终命名 (Public Name):** `sino-scrub` (直译：中华洗刷刷。寓意洗去不合规的尘埃。既有技术感又带点幽默)
+* **一句话标语 (Slogan):** Sanitize AI text for Chinese cultural nuances in milliseconds. (毫秒级清洗 AI 文本中的文化禁忌与敏感词。)
+* **核心痛点 (The "Ouch" Point):** 即使是最强的 LLM，也会生成像“执行程序”被翻译成“处死程序”，或者在春节文案里用到不吉利的谐音字。人工校对太慢，直接发布又怕公关危机。
+* **目标受众 (Target Audience):** AIGC 应用开发者、出海转内销的内容运营、企业合规部门。
+* **CLI 命令名:** `scrub` (简单、有力、动词)
+
+### 2. 🎯 MVP 范围界定 (Scope Definition)
+
+*不做大而全的 NLP，只做极速关键词替换。*
+
+* **核心功能 (Must-Have):**
+1. **内置基础词库**：包含常见的“硬伤”词汇（如不当政治称谓、迷信禁忌词、生硬翻译修正）。
+2. **FlashText 极速替换**：支持一次性加载数万个敏感词，以 O(N) 复杂度完成替换，不拖慢 API 响应。
+3. **高亮对比输出**：在终端显示“替换前 vs 替换后”的差异。
+
+
+* **暂不开发 (Nice-to-Have):**
+* 基于语义的上下文理解（如 BERT/LLM 二次校验，太慢，MVP 不做）。
+* PDF/Word 文档直接处理。
+* GUI 界面。
+
+
+* **输入 (Input):** 纯文本字符串，或 `.txt` 文件路径。
+* **输出 (Output):** 清洗后的纯文本，或在终端打印带有颜色高亮的 Diff 报告。
+
+### 3. 🧠 核心逻辑与算法 (Core Logic & Algo)
+
+*利用 FlashText 的算法优势，碾压正则表达式。*
+
+* **核心依赖库 (Key Dependencies):**
+* `flashtext`: 核心算法库，比 RegEx 快几十倍，适合海量关键词。
+* `rich`: 用于在终端展示漂亮的“红删绿改”对比效果。
+* `typer`: 现代化的 CLI 构建库。
+
+
+* **伪代码/流程图 (Logic Flow):**
+
+> 1. **加载阶段**: 初始化 `KeywordProcessor`，加载 `builtin_dict.json` (内置词库) + `user_custom_dict.json` (用户自定义)。
+> 2. **接收输入**: 此时用户输入一段 AI 生成的“危险文本”。
+> 3. **处理阶段**: 使用 FlashText 的 `extract_keywords` 或 `replace_keywords` 方法。
+> * *策略A (脱敏)*: 将敏感词替换为 `***`。
+> * *策略B (润色)*: 将 "处死" (Execute) 替换为 "执行"。
+> 
+> 
+> 4. **渲染阶段**: 计算原文本与新文本的 Diff，使用 Rich 打印。
+> 5. **输出阶段**: 返回清洗后的 Clean Text。
+> 
+> 
+
+* **异常处理策略:** 如果用户未提供自定义词库路径，默认回退到仅使用内置词库并发出 Warning，而不是报错退出。
+
+### 4. 🦴 代码结构骨架 (File Structure)
+
+*强调词库数据的管理。*
+
+```text
+sino-scrub/
+├── .github/workflows/      # CI/CD
+├── data/                   # [关键] 存放默认词库
+│   ├── political_sensitive.json  # 政治敏感 (慎用)
+│   ├── cultural_taboo.json       # 文化禁忌 (如: 数字4, 死, 凶)
+│   └── translation_fix.json      # 翻译修正 (如: Execute -> 执行)
+├── src/
+│   └── sino_scrub/
+│       ├── __init__.py
+│       ├── __main__.py
+│       ├── cli.py          # 处理命令: scrub "text" 或 scrub file.txt
+│       ├── processor.py    # 封装 FlashText 逻辑，单例模式加载词库
+│       ├── visualizer.py   # 封装 Rich 的 Diff 打印逻辑
+│       └── utils.py
+├── tests/                  # 测试替换准确率
+├── README.md               # 展示 Before/After 截图
+├── pyproject.toml          # Poetry 配置
+└── poetry.lock
+
+```
+
+### 5. ✨ 视觉与传播设计 (Visuals & Virality)
+
+*让用户感受到“瞬间净化”的爽感。*
+
+* **视觉钩子 (Visual Hook):**
+* **左侧 (红色背景/字体)**: AI 生成的原始文案，包含诸如“祝您全家*升天* (Go to heaven)”这种恐怖的直译错误。
+* **右侧 (绿色背景/字体)**: 经过 `scrub` 处理后的文案，“祝您全家*幸福*”。
+* 中间用一个 `->` 箭头连接，并标注 `Time: 0.002s`。
+
+
+* **Logo 概念:** 一个中国传统的“印章”图案，但中间是一个“洗”字，或者一个被扫帚扫过的气泡。
+* **应用场景示例 (Use Case):**
+```bash
+$ scrub "系统正在处死进程，请稍候。"
+
+>>> [WARN] Detected clumsy translation: '处死' -> '终止'
+>>> Result: "系统正在终止进程，请稍候。"
+
+```
+
+
+* **社交媒体文案 (Tweet Draft):**
+* "AI 翻译有时候真的很吓人... 'Execute the program' 居然被翻译成 '处死程序'？😱 别让你的 Bot 闹笑话。试试 `pip install sino-scrub`，用 FlashText 毫秒级修正文化禁忌和翻译硬伤。🇨🇳✨ #python #nlp #aigc"
+
+
+
+---
+
+### 💡 独家建议 (Pro Tip)
+
+为了让这个项目更有爆点，建议在 MVP 中加入一个 **"Debug Mode" (抓虫模式)**。
+不仅仅是替换，而是告诉用户**为什么**这个词被替换了。
+
+例如：
+
+* **原文:** "送您一顶绿色的帽子"
+* **Scrub 输出:** "送您一顶精美的帽子"
+* **Reason:** `[Cultural Taboo] 'Green Hat' implies infidelity in Chinese culture.`
+
+这个“解释功能”会非常有传播度，因为这直接展示了中西文化的冲突点，非常有梗！

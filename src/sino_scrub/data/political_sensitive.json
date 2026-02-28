@@ -1,0 +1,17 @@
+{
+  "台湾国": {
+    "replacement": "台湾地区",
+    "reason": "政治敏感：应使用'台湾地区'而非'台湾国'",
+    "category": "political"
+  },
+  "藏独": {
+    "replacement": "[敏感词已过滤]",
+    "reason": "政治敏感：涉及分裂主义内容",
+    "category": "political"
+  },
+  "疆独": {
+    "replacement": "[敏感词已过滤]",
+    "reason": "政治敏感：涉及分裂主义内容",
+    "category": "political"
+  }
+}
